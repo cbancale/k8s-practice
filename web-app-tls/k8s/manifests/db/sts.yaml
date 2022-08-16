@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: spring-petclinic-db
+  namespace: spring-petclinic
+spec:
+  selector:
+    matchLabels:
+      app: spring-petclinic-db
+  serviceName: spring-petclinic-db
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: spring-petclinic-db
+    spec:
+      containers:
+        - name: postgres
+          image: postgres:14.1
+          ports:
+            - containerPort: 5432
+          volumeMounts:
+            - name: spring-petclinic-db-disk
+              mountPath: /data
+          envFrom:
+            - configMapRef:
+                name: spring-petclinic-db-config
+            - secretRef:
+                name: spring-petclinic-db-password
+  volumeClaimTemplates:
+    - metadata:
+        name: spring-petclinic-db-disk
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        resources:
+          requests:
+            storage: 1Gi

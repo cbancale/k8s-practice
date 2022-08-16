@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: spring-petclinic-db-config
+data:
+  POSTGRES_USER: petclinic
+  POSTGRES_DB: petclinic
+  PGDATA: /data/pgdata

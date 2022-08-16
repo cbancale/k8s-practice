@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: spring-petclinic-db
+  namespace: spring-petclinic
+  labels:
+    app: spring-petclinic-db
+spec:
+  selector:
+    app: spring-petclinic-db
+  clusterIP: None
+  ports:
+    - port: 5432

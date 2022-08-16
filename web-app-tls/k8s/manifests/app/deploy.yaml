@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: spring-petclinic
+  namespace: spring-petclinic
+spec:
+  selector:
+    matchLabels:
+      app: spring-petclinic
+  template:
+    metadata:
+      labels:
+        app: spring-petclinic
+    spec:
+      containers:
+        - name: spring-petclinic
+          image: minikube/spring-petclinic:2.7.0
+          imagePullPolicy: Never
+          command:
+            - "java"
+            - "-jar"
+            - "app.jar"
+          env:
+            - name: POSTGRES_URL
+              value: jdbc:postgresql://spring-petclinic-db:5432/petclinic
+          ports:
+            - containerPort: 8080
